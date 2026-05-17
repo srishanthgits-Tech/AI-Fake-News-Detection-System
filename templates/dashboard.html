@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Intelligence Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            overflow-x:hidden;
+            position:relative;
+
+            background:
+            radial-gradient(circle at top left,#00d9ff18,transparent 28%),
+            radial-gradient(circle at bottom right,#8b5cf618,transparent 28%),
+            linear-gradient(135deg,#020617,#0b1120,#111827);
+
+            color:white;
+            padding:28px;
+        }
+
+        body::before{
+
+            content:'';
+            position:absolute;
+            inset:0;
+
+            background-image:
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+
+            background-size:50px 50px;
+
+            animation:gridMove 20s linear infinite;
+
+            pointer-events:none;
+        }
+
+        @keyframes gridMove{
+
+            0%{
+                transform:translateY(0);
+            }
+
+            100%{
+                transform:translateY(50px);
+            }
+
+        }
+
+        .glow{
+
+            position:absolute;
+            width:320px;
+            height:320px;
+
+            border-radius:50%;
+
+            filter:blur(130px);
+
+            opacity:0.3;
+
+            pointer-events:none;
+        }
+
+        .glow1{
+            background:#00d9ff;
+            top:-120px;
+            left:-120px;
+        }
+
+        .glow2{
+            background:#8b5cf6;
+            bottom:-120px;
+            right:-120px;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+
+            width:100%;
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            padding:18px 30px;
+
+            background:rgba(7,14,28,0.75);
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            border-radius:24px;
+
+            backdrop-filter:blur(20px);
+
+            position:relative;
+            z-index:10;
+
+            margin-bottom:40px;
+        }
+
+        .logo{
+
+            font-size:20px;
+            font-weight:700;
+
+            color:#00d9ff;
+
+            letter-spacing:2px;
+        }
+
+        .logout-btn{
+
+            padding:13px 26px;
+
+            border:none;
+
+            border-radius:40px;
+
+            background:
+            linear-gradient(135deg,#00d9ff,#0ea5e9);
+
+            color:black;
+
+            font-weight:700;
+
+            cursor:pointer;
+
+            transition:0.4s ease;
+        }
+
+        .logout-btn:hover{
+
+            transform:translateY(-3px);
+
+            box-shadow:
+            0 10px 25px rgba(0,217,255,0.3);
+        }
+
+        /* HERO */
+
+        .hero{
+
+            text-align:center;
+
+            position:relative;
+            z-index:10;
+
+            margin-bottom:55px;
+        }
+
+        .hero-tag{
+
+            display:inline-block;
+
+            padding:10px 22px;
+
+            border-radius:40px;
+
+            background:rgba(0,217,255,0.08);
+
+            border:1px solid rgba(0,217,255,0.15);
+
+            color:#00d9ff;
+
+            font-size:14px;
+            font-weight:600;
+
+            margin-bottom:25px;
+        }
+
+        .hero h1{
+
+            font-size:68px;
+            line-height:1.05;
+
+            margin-bottom:25px;
+        }
+
+        .hero h1 span{
+            color:#00d9ff;
+        }
+
+        .hero p{
+
+            max-width:900px;
+
+            margin:auto;
+
+            color:#94a3b8;
+
+            line-height:1.9;
+
+            font-size:17px;
+        }
+
+        /* MAIN SECTION */
+
+        .ai-monitor{
+
+            display:grid;
+            grid-template-columns:1.2fr 0.8fr;
+
+            gap:28px;
+
+            margin-bottom:40px;
+
+            position:relative;
+            z-index:10;
+
+            align-items:start;
+        }
+
+        /* LEFT PANEL */
+
+        .live-panel{
+
+            background:rgba(7,14,28,0.75);
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            border-radius:30px;
+
+            padding:35px;
+
+            backdrop-filter:blur(20px);
+
+            position:relative;
+
+            overflow:hidden;
+        }
+
+        .live-panel::before{
+
+            content:'';
+
+            position:absolute;
+
+            width:260px;
+            height:260px;
+
+            background:#00d9ff12;
+
+            border-radius:50%;
+
+            top:-130px;
+            right:-130px;
+        }
+
+        .panel-top{
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            margin-bottom:30px;
+        }
+
+        .panel-title{
+
+            font-size:28px;
+            font-weight:600;
+        }
+
+        .panel-title span{
+            color:#00d9ff;
+        }
+
+        .status{
+
+            display:flex;
+            align-items:center;
+            gap:10px;
+
+            color:#4ade80;
+
+            font-size:14px;
+        }
+
+        .dot{
+
+            width:10px;
+            height:10px;
+
+            border-radius:50%;
+
+            background:#4ade80;
+
+            box-shadow:
+            0 0 12px #4ade80;
+        }
+
+        /* SEARCH */
+
+        .search-wrapper{
+
+            position:relative;
+            margin-top:15px;
+        }
+
+        .search-wrapper input{
+
+            width:100%;
+
+            padding:22px 24px;
+
+            border-radius:22px;
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            background:rgba(255,255,255,0.04);
+
+            color:white;
+
+            font-size:16px;
+
+            outline:none;
+
+            transition:0.4s ease;
+        }
+
+        .search-wrapper input:focus{
+
+            border-color:#00d9ff;
+
+            box-shadow:
+            0 0 20px rgba(0,217,255,0.2);
+        }
+
+        .search-wrapper input::placeholder{
+            color:#64748b;
+        }
+
+        .search-btn{
+
+            position:absolute;
+
+            right:8px;
+            top:8px;
+
+            padding:14px 24px;
+
+            border:none;
+
+            border-radius:16px;
+
+            background:
+            linear-gradient(135deg,#00d9ff,#0ea5e9);
+
+            color:black;
+
+            font-weight:700;
+
+            cursor:pointer;
+
+            transition:0.4s ease;
+        }
+
+        .search-btn:hover{
+
+            transform:scale(1.03);
+
+            box-shadow:
+            0 10px 20px rgba(0,217,255,0.3);
+        }
+
+        /* RESULT */
+
+        .result{
+
+            margin-top:30px;
+
+            background:rgba(255,255,255,0.03);
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            border-radius:26px;
+
+            padding:35px;
+
+            animation:slideUp 0.6s ease;
+
+            position:relative;
+
+            overflow:hidden;
+        }
+
+        .result::before{
+
+            content:'';
+
+            position:absolute;
+
+            width:220px;
+            height:220px;
+
+            background:#8b5cf614;
+
+            border-radius:50%;
+
+            bottom:-120px;
+            right:-120px;
+        }
+
+        @keyframes slideUp{
+
+            from{
+                opacity:0;
+                transform:translateY(25px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+
+        }
+
+        .result-header{
+
+            margin-bottom:25px;
+        }
+
+        .result-header h2{
+
+            font-size:30px;
+
+            color:#00d9ff;
+
+            margin-bottom:20px;
+        }
+
+        .verified{
+
+            display:inline-block;
+
+            padding:10px 18px;
+
+            border-radius:40px;
+
+            background:rgba(34,197,94,0.12);
+
+            border:1px solid rgba(34,197,94,0.2);
+
+            color:#4ade80;
+
+            font-size:14px;
+            font-weight:600;
+        }
+
+        .not-found{
+
+            background:rgba(239,68,68,0.12);
+
+            border:1px solid rgba(239,68,68,0.2);
+
+            color:#f87171;
+        }
+
+        .result p{
+
+            color:#d1d5db;
+
+            line-height:2;
+
+            font-size:15px;
+
+            margin-top:28px;
+        }
+
+        .summary-btn{
+
+            margin-top:35px;
+
+            padding:16px 28px;
+
+            border:none;
+
+            border-radius:18px;
+
+            background:
+            linear-gradient(135deg,#8b5cf6,#7c3aed);
+
+            color:white;
+
+            font-size:15px;
+            font-weight:600;
+
+            cursor:pointer;
+
+            transition:0.4s ease;
+        }
+
+        .summary-btn:hover{
+
+            transform:translateY(-4px);
+
+            box-shadow:
+            0 10px 25px rgba(139,92,246,0.35);
+        }
+
+        /* RIGHT PANEL */
+
+        .side-card{
+
+            background:rgba(7,14,28,0.75);
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            border-radius:30px;
+
+            padding:35px;
+
+            backdrop-filter:blur(20px);
+
+            position:sticky;
+
+            top:28px;
+
+            overflow:hidden;
+        }
+
+        .scanner{
+
+            width:150px;
+            height:150px;
+
+            margin:auto;
+
+            position:relative;
+
+            margin-bottom:30px;
+        }
+
+        .ring{
+
+            position:absolute;
+            inset:0;
+
+            border-radius:50%;
+
+            border:2px solid rgba(0,217,255,0.25);
+
+            animation:rotate 8s linear infinite;
+        }
+
+        .ring:nth-child(2){
+
+            inset:14px;
+
+            border-color:rgba(139,92,246,0.3);
+
+            animation-direction:reverse;
+        }
+
+        .ring:nth-child(3){
+
+            inset:28px;
+
+            border-color:rgba(255,255,255,0.15);
+        }
+
+        @keyframes rotate{
+
+            from{
+                transform:rotate(0deg);
+            }
+
+            to{
+                transform:rotate(360deg);
+            }
+
+        }
+
+        .scanner-text{
+
+            position:absolute;
+            inset:0;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            color:#00d9ff;
+
+            font-size:22px;
+            font-weight:700;
+        }
+
+        .side-card h3{
+
+            text-align:center;
+
+            font-size:28px;
+
+            margin-bottom:18px;
+        }
+
+        .monitor-subtitle{
+
+            text-align:center;
+
+            color:#94a3b8;
+
+            margin-bottom:35px;
+
+            line-height:1.8;
+        }
+
+        /* PROCESS SYSTEM */
+
+        .process-container{
+
+            margin-top:35px;
+
+            display:flex;
+            flex-direction:column;
+
+            gap:18px;
+        }
+
+        .process-step{
+
+            display:flex;
+            align-items:center;
+
+            gap:14px;
+
+            padding:18px 20px;
+
+            border-radius:18px;
+
+            background:rgba(255,255,255,0.03);
+
+            border:1px solid rgba(255,255,255,0.05);
+
+            color:#94a3b8;
+
+            transition:0.4s ease;
+        }
+
+        .process-step:hover{
+
+            transform:translateX(5px);
+
+            border-color:rgba(0,217,255,0.15);
+        }
+
+        .step-dot{
+
+            width:12px;
+            height:12px;
+
+            border-radius:50%;
+
+            background:#00d9ff;
+
+            box-shadow:
+            0 0 12px #00d9ff;
+
+            animation:pulse 1.5s infinite;
+        }
+
+        @keyframes pulse{
+
+            0%{
+                transform:scale(1);
+                opacity:1;
+            }
+
+            50%{
+                transform:scale(1.4);
+                opacity:0.6;
+            }
+
+            100%{
+                transform:scale(1);
+                opacity:1;
+            }
+
+        }
+
+        .completed-step{
+
+            color:#4ade80;
+
+            border-color:rgba(34,197,94,0.15);
+
+            background:rgba(34,197,94,0.05);
+        }
+
+        .completed-dot{
+
+            background:#4ade80;
+
+            box-shadow:
+            0 0 12px #4ade80;
+        }
+
+        .success-step{
+
+            color:#22c55e;
+
+            border-color:rgba(34,197,94,0.2);
+
+            background:rgba(34,197,94,0.06);
+
+            animation:successPulse 2s infinite;
+        }
+
+        .success-dot{
+
+            background:#22c55e;
+
+            box-shadow:
+            0 0 14px #22c55e;
+        }
+
+        .error-step{
+
+            color:#f87171;
+
+            border-color:rgba(239,68,68,0.2);
+
+            background:rgba(239,68,68,0.06);
+        }
+
+        .error-dot{
+
+            background:#ef4444;
+
+            box-shadow:
+            0 0 14px #ef4444;
+        }
+
+        @keyframes successPulse{
+
+            0%{
+                transform:scale(1);
+            }
+
+            50%{
+                transform:scale(1.02);
+            }
+
+            100%{
+                transform:scale(1);
+            }
+
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:950px){
+
+            .ai-monitor{
+                grid-template-columns:1fr;
+            }
+
+            .hero h1{
+                font-size:48px;
+            }
+
+            .side-card{
+                position:relative;
+                top:0;
+            }
+
+        }
+
+        @media(max-width:700px){
+
+            body{
+                padding:18px;
+            }
+
+            .navbar{
+                flex-direction:column;
+                gap:15px;
+            }
+
+            .hero h1{
+                font-size:38px;
+            }
+
+            .live-panel,
+            .side-card{
+                padding:28px;
+            }
+
+            .search-btn{
+
+                position:relative;
+
+                width:100%;
+
+                margin-top:12px;
+
+                right:auto;
+                top:auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="glow glow1"></div>
+    <div class="glow glow2"></div>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            AI INTELLIGENCE CENTER
+        </div>
+
+        <button class="logout-btn"
+                onclick="window.location.href='{{ url_for('logout') }}'">
+
+            Logout
+
+        </button>
+
+    </div>
+
+    <!-- HERO -->
+
+    <div class="hero">
+
+        <div class="hero-tag">
+            REAL-TIME AI VERIFICATION SYSTEM
+        </div>
+
+        <h1>
+            Analyze <span>Truth & Intelligence</span>
+        </h1>
+
+        <p>
+            Advanced AI-powered platform for fake news detection,
+            intelligent summarization, real-time content analysis,
+            and secure information verification using modern machine learning.
+        </p>
+
+    </div>
+
+    <!-- MAIN SECTION -->
+
+    <div class="ai-monitor">
+
+        <!-- LEFT PANEL -->
+
+        <div class="live-panel">
+
+            <div class="panel-top">
+
+                <div class="panel-title">
+                    AI <span>Search Console</span>
+                </div>
+
+                <div class="status">
+
+                    <div class="dot"></div>
+
+                    System Active
+
+                </div>
+
+            </div>
+
+            <form method="POST">
+
+                <div class="search-wrapper">
+
+                    <input type="text"
+                           name="topic"
+                           placeholder="Search any topic for AI analysis..."
+                           required>
+
+                    <button type="submit"
+                            class="search-btn">
+
+                        Analyze
+
+                    </button>
+
+                </div>
+
+            </form>
+
+            {% if content %}
+
+            <div class="result">
+
+                <div class="result-header">
+
+                    <h2>
+                        Analysis Result: {{ topic }}
+                    </h2>
+
+                    {% if "not found" in content.lower() %}
+
+                    <div class="verified not-found">
+                        Topic Not Found
+                    </div>
+
+                    {% else %}
+
+                    <div class="verified">
+                        AI Analysis Completed
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+                <p>
+                    {{ content }}
+                </p>
+
+                {% if "not found" not in content.lower() %}
+
+                <form method="POST" action="/summarize">
+
+                    <input type="hidden"
+                           name="topic"
+                           value="{{ topic }}">
+
+                    <button type="submit"
+                            class="summary-btn">
+
+                        Generate AI Summary
+
+                    </button>
+
+                </form>
+
+                {% endif %}
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        <!-- RIGHT PANEL -->
+
+        <div class="side-card">
+
+            <div class="scanner">
+
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+
+                <div class="scanner-text">
+                    AI
+                </div>
+
+            </div>
+
+            <h3>
+                AI Processing Engine
+            </h3>
+
+            <p class="monitor-subtitle">
+                Real-time artificial intelligence workflow monitoring
+            </p>
+
+            <div class="process-container">
+
+                <div class="process-step completed-step">
+
+                    <div class="step-dot completed-dot"></div>
+
+                    AI Engine Initialized
+
+                </div>
+
+                <div class="process-step completed-step">
+
+                    <div class="step-dot completed-dot"></div>
+
+                    News Sources Collected
+
+                </div>
+
+                <div class="process-step completed-step">
+
+                    <div class="step-dot completed-dot"></div>
+
+                    Misinformation Scan Finished
+
+                </div>
+
+                <div class="process-step completed-step">
+
+                    <div class="step-dot completed-dot"></div>
+
+                    Content Analysis Completed
+
+                </div>
+
+                {% if content %}
+
+                    {% if "not found" in content.lower() %}
+
+                    <div class="process-step error-step">
+
+                        <div class="step-dot error-dot"></div>
+
+                        AI Could Not Find Reliable Topic Data
+
+                    </div>
+
+                    {% else %}
+
+                    <div class="process-step success-step">
+
+                        <div class="step-dot success-dot"></div>
+
+                        AI Successfully Generated News Analysis
+
+                    </div>
+
+                    {% endif %}
+
+                {% else %}
+
+                <div class="process-step">
+
+                    <div class="step-dot"></div>
+
+                    Waiting For AI Search Request...
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

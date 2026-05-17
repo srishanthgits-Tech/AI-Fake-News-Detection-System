@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Intelligence Summary</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+
+            min-height:100vh;
+
+            overflow-x:hidden;
+
+            position:relative;
+
+            background:
+            radial-gradient(circle at top left,#00d9ff18,transparent 28%),
+            radial-gradient(circle at bottom right,#8b5cf618,transparent 28%),
+            linear-gradient(135deg,#020617,#0b1120,#111827);
+
+            color:white;
+
+            padding:28px;
+        }
+
+        body::before{
+
+            content:'';
+
+            position:absolute;
+            inset:0;
+
+            background-image:
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+
+            background-size:50px 50px;
+
+            animation:gridMove 20s linear infinite;
+
+            pointer-events:none;
+        }
+
+        @keyframes gridMove{
+
+            0%{
+                transform:translateY(0);
+            }
+
+            100%{
+                transform:translateY(50px);
+            }
+
+        }
+
+        .glow{
+
+            position:absolute;
+
+            width:320px;
+            height:320px;
+
+            border-radius:50%;
+
+            filter:blur(130px);
+
+            opacity:0.3;
+
+            pointer-events:none;
+        }
+
+        .glow1{
+            background:#00d9ff;
+            top:-120px;
+            left:-120px;
+        }
+
+        .glow2{
+            background:#8b5cf6;
+            bottom:-120px;
+            right:-120px;
+        }
+
+        .hero{
+
+            text-align:center;
+
+            position:relative;
+            z-index:10;
+
+            margin-bottom:50px;
+        }
+
+        .hero-tag{
+
+            display:inline-block;
+
+            padding:10px 24px;
+
+            border-radius:40px;
+
+            background:rgba(0,217,255,0.08);
+
+            border:1px solid rgba(0,217,255,0.15);
+
+            color:#00d9ff;
+
+            font-size:14px;
+            font-weight:600;
+
+            margin-bottom:25px;
+        }
+
+        .hero h1{
+
+            font-size:64px;
+
+            line-height:1.1;
+
+            margin-bottom:25px;
+        }
+
+        .hero h1 span{
+            color:#00d9ff;
+        }
+
+        .hero p{
+
+            max-width:850px;
+
+            margin:auto;
+
+            color:#94a3b8;
+
+            line-height:1.9;
+
+            font-size:17px;
+        }
+
+        /* MAIN SECTION */
+
+        .summary-layout{
+
+            display:grid;
+
+            grid-template-columns:1.2fr 0.8fr;
+
+            gap:28px;
+
+            position:relative;
+            z-index:10;
+        }
+
+        /* LEFT PANEL */
+
+        .summary-card{
+
+            background:rgba(7,14,28,0.75);
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            border-radius:30px;
+
+            padding:38px;
+
+            backdrop-filter:blur(20px);
+
+            position:relative;
+
+            overflow:hidden;
+        }
+
+        .summary-card::before{
+
+            content:'';
+
+            position:absolute;
+
+            width:260px;
+            height:260px;
+
+            background:#8b5cf615;
+
+            border-radius:50%;
+
+            bottom:-120px;
+            right:-120px;
+        }
+
+        .summary-top{
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            margin-bottom:35px;
+        }
+
+        .summary-title{
+
+            font-size:32px;
+            font-weight:700;
+        }
+
+        .summary-title span{
+            color:#00d9ff;
+        }
+
+        .status-badge{
+
+            padding:12px 18px;
+
+            border-radius:40px;
+
+            font-size:14px;
+            font-weight:600;
+        }
+
+        .real{
+
+            background:rgba(34,197,94,0.12);
+
+            border:1px solid rgba(34,197,94,0.2);
+
+            color:#4ade80;
+        }
+
+        .fake{
+
+            background:rgba(239,68,68,0.12);
+
+            border:1px solid rgba(239,68,68,0.2);
+
+            color:#f87171;
+        }
+
+        .summary-content{
+
+            color:#d1d5db;
+
+            line-height:2.1;
+
+            font-size:16px;
+
+            margin-bottom:40px;
+        }
+
+        /* BUTTONS */
+
+        .action-buttons{
+
+            display:flex;
+
+            flex-wrap:wrap;
+
+            gap:18px;
+        }
+
+        .action-btn{
+
+            padding:15px 26px;
+
+            border:none;
+
+            border-radius:18px;
+
+            text-decoration:none;
+
+            font-size:15px;
+            font-weight:600;
+
+            transition:0.4s ease;
+
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+
+            cursor:pointer;
+        }
+
+        .download-btn{
+
+            background:
+            linear-gradient(135deg,#00d9ff,#0ea5e9);
+
+            color:black;
+        }
+
+        .share-btn{
+
+            background:
+            linear-gradient(135deg,#8b5cf6,#7c3aed);
+
+            color:white;
+        }
+
+        .search-btn{
+
+            background:
+            linear-gradient(135deg,#22c55e,#16a34a);
+
+            color:white;
+        }
+
+        .logout-btn{
+
+            background:
+            linear-gradient(135deg,#ef4444,#dc2626);
+
+            color:white;
+        }
+
+        .action-btn:hover{
+
+            transform:translateY(-4px);
+
+            box-shadow:
+            0 10px 25px rgba(255,255,255,0.15);
+        }
+
+        /* RIGHT PANEL */
+
+        .side-panel{
+
+            background:rgba(7,14,28,0.75);
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            border-radius:30px;
+
+            padding:35px;
+
+            backdrop-filter:blur(20px);
+
+            position:sticky;
+
+            top:28px;
+
+            overflow:hidden;
+        }
+
+        .scanner{
+
+            width:170px;
+            height:170px;
+
+            margin:auto;
+
+            position:relative;
+
+            margin-bottom:35px;
+        }
+
+        .ring{
+
+            position:absolute;
+
+            inset:0;
+
+            border-radius:50%;
+
+            border:2px solid rgba(0,217,255,0.25);
+
+            animation:rotate 8s linear infinite;
+        }
+
+        .ring:nth-child(2){
+
+            inset:15px;
+
+            border-color:rgba(139,92,246,0.3);
+
+            animation-direction:reverse;
+        }
+
+        .ring:nth-child(3){
+
+            inset:30px;
+
+            border-color:rgba(255,255,255,0.15);
+        }
+
+        @keyframes rotate{
+
+            from{
+                transform:rotate(0deg);
+            }
+
+            to{
+                transform:rotate(360deg);
+            }
+
+        }
+
+        .scanner-text{
+
+            position:absolute;
+            inset:0;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            font-size:24px;
+            font-weight:700;
+
+            color:#00d9ff;
+        }
+
+        .side-panel h3{
+
+            text-align:center;
+
+            font-size:30px;
+
+            margin-bottom:18px;
+        }
+
+        .side-panel p{
+
+            text-align:center;
+
+            color:#94a3b8;
+
+            line-height:1.9;
+
+            margin-bottom:35px;
+        }
+
+        /* AI STATUS */
+
+        .status-list{
+
+            display:flex;
+            flex-direction:column;
+
+            gap:18px;
+        }
+
+        .status-item{
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            padding:18px 20px;
+
+            border-radius:18px;
+
+            background:rgba(255,255,255,0.03);
+
+            border:1px solid rgba(255,255,255,0.05);
+        }
+
+        .status-left{
+
+            display:flex;
+            align-items:center;
+
+            gap:12px;
+        }
+
+        .status-dot{
+
+            width:12px;
+            height:12px;
+
+            border-radius:50%;
+
+            background:#00d9ff;
+
+            box-shadow:
+            0 0 12px #00d9ff;
+
+            animation:pulse 1.5s infinite;
+        }
+
+        @keyframes pulse{
+
+            0%{
+                transform:scale(1);
+                opacity:1;
+            }
+
+            50%{
+                transform:scale(1.4);
+                opacity:0.6;
+            }
+
+            100%{
+                transform:scale(1);
+                opacity:1;
+            }
+
+        }
+
+        .status-right{
+
+            color:#00d9ff;
+
+            font-weight:600;
+        }
+
+        /* SHARE MODAL */
+
+        .share-modal{
+
+            display:none;
+
+            position:fixed;
+
+            top:50%;
+            left:50%;
+
+            transform:translate(-50%,-50%);
+
+            width:400px;
+
+            background:#0f172a;
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            border-radius:28px;
+
+            padding:35px;
+
+            z-index:100;
+
+            text-align:center;
+        }
+
+        .share-modal h3{
+
+            margin-bottom:25px;
+
+            font-size:28px;
+        }
+
+        .share-icons{
+
+            display:flex;
+            justify-content:center;
+
+            gap:18px;
+        }
+
+        .share-icons a{
+
+            width:60px;
+            height:60px;
+
+            border-radius:50%;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            text-decoration:none;
+
+            font-size:24px;
+
+            transition:0.4s ease;
+        }
+
+        .email{
+            background:#ea4335;
+        }
+
+        .whatsapp{
+            background:#25d366;
+        }
+
+        .twitter{
+            background:#1da1f2;
+        }
+
+        .facebook{
+            background:#1877f2;
+        }
+
+        .share-icons a:hover{
+
+            transform:scale(1.1);
+        }
+
+        .close-btn{
+
+            margin-top:28px;
+
+            padding:12px 24px;
+
+            border:none;
+
+            border-radius:14px;
+
+            background:#ef4444;
+
+            color:white;
+
+            cursor:pointer;
+        }
+
+        .overlay{
+
+            display:none;
+
+            position:fixed;
+
+            inset:0;
+
+            background:rgba(0,0,0,0.6);
+
+            z-index:50;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:950px){
+
+            .summary-layout{
+                grid-template-columns:1fr;
+            }
+
+            .hero h1{
+                font-size:46px;
+            }
+
+            .side-panel{
+                position:relative;
+                top:0;
+            }
+
+        }
+
+        @media(max-width:700px){
+
+            body{
+                padding:18px;
+            }
+
+            .hero h1{
+                font-size:38px;
+            }
+
+            .summary-card,
+            .side-panel{
+                padding:28px;
+            }
+
+            .summary-top{
+                flex-direction:column;
+                gap:20px;
+                align-items:flex-start;
+            }
+
+            .action-buttons{
+                flex-direction:column;
+            }
+
+            .action-btn{
+                width:100%;
+            }
+
+            .share-modal{
+                width:90%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="glow glow1"></div>
+    <div class="glow glow2"></div>
+
+    <!-- HERO -->
+
+    <div class="hero">
+
+        <div class="hero-tag">
+            AI SUMMARY GENERATED SUCCESSFULLY
+        </div>
+
+        <h1>
+            AI Intelligence <span>Report Center</span>
+        </h1>
+
+        <p>
+            Advanced artificial intelligence generated this detailed
+            content summary using intelligent analysis, machine learning,
+            and real-time information verification systems.
+        </p>
+
+    </div>
+
+    <!-- MAIN SECTION -->
+
+    <div class="summary-layout">
+
+        <!-- LEFT PANEL -->
+
+        <div class="summary-card">
+
+            <div class="summary-top">
+
+                <div class="summary-title">
+                    AI <span>Generated Summary</span>
+                </div>
+
+                {% if status == "Real" %}
+
+                <div class="status-badge real">
+                    VERIFIED CONTENT
+                </div>
+
+                {% else %}
+
+                <div class="status-badge fake">
+                    SUSPICIOUS CONTENT
+                </div>
+
+                {% endif %}
+
+            </div>
+
+            <div class="summary-content">
+                {{ summary }}
+            </div>
+
+            <!-- ACTION BUTTONS -->
+
+            <div class="action-buttons">
+
+                <a href="{{ url_for('download_article', topic=topic) }}"
+                   target="_blank"
+                   class="action-btn download-btn">
+
+                    📥 Download Report
+
+                </a>
+
+                <button class="action-btn share-btn"
+                        onclick="showShareOptions()">
+
+                    🔗 Share Report
+
+                </button>
+
+                <a href="{{ url_for('dashboard') }}"
+                   class="action-btn search-btn">
+
+                    🔍 New Analysis
+
+                </a>
+
+                <a href="{{ url_for('logout') }}"
+                   class="action-btn logout-btn">
+
+                    🚪 Logout
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT PANEL -->
+
+        <div class="side-panel">
+
+            <div class="scanner">
+
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+
+                <div class="scanner-text">
+                    AI
+                </div>
+
+            </div>
+
+            <h3>
+                Intelligence Scanner
+            </h3>
+
+            <p>
+                Real-time artificial intelligence monitoring and
+                verification engine processing content authenticity.
+            </p>
+
+            <!-- STATUS LIST -->
+
+            <div class="status-list">
+
+                <div class="status-item">
+
+                    <div class="status-left">
+
+                        <div class="status-dot"></div>
+
+                        Neural AI Analysis
+
+                    </div>
+
+                    <div class="status-right">
+                        Active
+                    </div>
+
+                </div>
+
+                <div class="status-item">
+
+                    <div class="status-left">
+
+                        <div class="status-dot"></div>
+
+                        Content Verification
+
+                    </div>
+
+                    <div class="status-right">
+                        Completed
+                    </div>
+
+                </div>
+
+                <div class="status-item">
+
+                    <div class="status-left">
+
+                        <div class="status-dot"></div>
+
+                        AI Summary Engine
+
+                    </div>
+
+                    <div class="status-right">
+                        Generated
+                    </div>
+
+                </div>
+
+                <div class="status-item">
+
+                    <div class="status-left">
+
+                        <div class="status-dot"></div>
+
+                        Intelligence Status
+
+                    </div>
+
+                    <div class="status-right">
+
+                        {% if status == "Real" %}
+                            Trusted
+                        {% else %}
+                            Warning
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SHARE MODAL -->
+
+    <div class="share-modal"
+         id="shareModal">
+
+        <h3>
+            Share Intelligence Report
+        </h3>
+
+        <div class="share-icons">
+
+            <a href="#"
+               target="_blank"
+               id="share-email"
+               class="email">
+
+               📧
+
+            </a>
+
+            <a href="#"
+               target="_blank"
+               id="share-whatsapp"
+               class="whatsapp">
+
+               📱
+
+            </a>
+
+            <a href="#"
+               target="_blank"
+               id="share-twitter"
+               class="twitter">
+
+               🐦
+
+            </a>
+
+            <a href="#"
+               target="_blank"
+               id="share-facebook"
+               class="facebook">
+
+               📘
+
+            </a>
+
+        </div>
+
+        <button class="close-btn"
+                onclick="closeShareOptions()">
+
+            Close
+
+        </button>
+
+    </div>
+
+    <div class="overlay"
+         id="overlay"
+         onclick="closeShareOptions()"></div>
+
+    <script>
+
+        function showShareOptions() {
+
+            document.getElementById('shareModal').style.display = 'block';
+
+            document.getElementById('overlay').style.display = 'block';
+
+            let topic = encodeURIComponent("{{ topic }}");
+
+            let summary = encodeURIComponent(`{{ summary|replace('\n', ' ') }}`);
+
+            let shareUrl = encodeURIComponent(window.location.href);
+
+            document.getElementById("share-email").href =
+            `mailto:?subject=AI Intelligence Report: ${topic}&body=${summary} - ${shareUrl}`;
+
+            document.getElementById("share-whatsapp").href =
+            `https://wa.me/?text=AI Intelligence Report: ${topic} - ${summary} - ${shareUrl}`;
+
+            document.getElementById("share-twitter").href =
+            `https://twitter.com/intent/tweet?text=AI Intelligence Report: ${topic} - ${shareUrl}`;
+
+            document.getElementById("share-facebook").href =
+            `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+        }
+
+        function closeShareOptions() {
+
+            document.getElementById('shareModal').style.display = 'none';
+
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+    </script>
+
+</body>
+
+</html>

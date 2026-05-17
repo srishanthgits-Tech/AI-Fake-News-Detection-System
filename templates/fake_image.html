@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>AI Image Forensics Lab</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    position:relative;
+
+    background:
+    radial-gradient(circle at top left,#00d9ff18,transparent 28%),
+    radial-gradient(circle at bottom right,#8b5cf618,transparent 28%),
+    linear-gradient(135deg,#020617,#0b1120,#111827);
+
+    color:white;
+
+    padding:28px;
+}
+
+body::before{
+
+    content:'';
+
+    position:absolute;
+    inset:0;
+
+    background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+
+    background-size:50px 50px;
+
+    animation:gridMove 20s linear infinite;
+
+    pointer-events:none;
+}
+
+@keyframes gridMove{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    100%{
+        transform:translateY(50px);
+    }
+
+}
+
+.glow{
+
+    position:absolute;
+
+    width:320px;
+    height:320px;
+
+    border-radius:50%;
+
+    filter:blur(130px);
+
+    opacity:0.3;
+
+    pointer-events:none;
+}
+
+.glow1{
+    background:#00d9ff;
+    top:-120px;
+    left:-120px;
+}
+
+.glow2{
+    background:#8b5cf6;
+    bottom:-120px;
+    right:-120px;
+}
+
+/* HERO */
+
+.hero{
+
+    text-align:center;
+
+    position:relative;
+    z-index:10;
+
+    margin-bottom:55px;
+}
+
+.hero-tag{
+
+    display:inline-block;
+
+    padding:10px 24px;
+
+    border-radius:40px;
+
+    background:rgba(0,217,255,0.08);
+
+    border:1px solid rgba(0,217,255,0.15);
+
+    color:#00d9ff;
+
+    font-size:14px;
+    font-weight:600;
+
+    margin-bottom:25px;
+}
+
+.hero h1{
+
+    font-size:68px;
+
+    line-height:1.05;
+
+    margin-bottom:25px;
+}
+
+.hero h1 span{
+    color:#00d9ff;
+}
+
+.hero p{
+
+    max-width:850px;
+
+    margin:auto;
+
+    color:#94a3b8;
+
+    line-height:1.9;
+
+    font-size:17px;
+}
+
+/* MAIN LAYOUT */
+
+.main-layout{
+
+    display:grid;
+
+    grid-template-columns:1.1fr 0.9fr;
+
+    gap:28px;
+
+    position:relative;
+    z-index:10;
+}
+
+/* LEFT PANEL */
+
+.upload-panel{
+
+    background:rgba(7,14,28,0.75);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:30px;
+
+    padding:38px;
+
+    backdrop-filter:blur(20px);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.upload-panel::before{
+
+    content:'';
+
+    position:absolute;
+
+    width:260px;
+    height:260px;
+
+    background:#00d9ff12;
+
+    border-radius:50%;
+
+    top:-120px;
+    right:-120px;
+}
+
+.panel-title{
+
+    font-size:34px;
+    font-weight:700;
+
+    margin-bottom:15px;
+}
+
+.panel-title span{
+    color:#00d9ff;
+}
+
+.panel-subtitle{
+
+    color:#94a3b8;
+
+    line-height:1.9;
+
+    margin-bottom:35px;
+}
+
+/* UPLOAD AREA */
+
+.upload-box{
+
+    position:relative;
+
+    border:2px dashed rgba(0,217,255,0.3);
+
+    background:rgba(255,255,255,0.03);
+
+    border-radius:28px;
+
+    padding:55px 30px;
+
+    text-align:center;
+
+    transition:0.4s ease;
+
+    overflow:hidden;
+}
+
+.upload-box:hover{
+
+    border-color:#00d9ff;
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 15px 35px rgba(0,217,255,0.08);
+}
+
+.upload-icon{
+
+    font-size:65px;
+
+    margin-bottom:20px;
+}
+
+.upload-text{
+
+    font-size:20px;
+    font-weight:600;
+
+    margin-bottom:12px;
+}
+
+.upload-sub{
+
+    color:#94a3b8;
+
+    margin-bottom:28px;
+}
+
+input[type="file"]{
+
+    width:100%;
+
+    padding:14px;
+
+    border-radius:16px;
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    background:rgba(255,255,255,0.04);
+
+    color:white;
+
+    margin-bottom:25px;
+}
+
+/* BUTTONS */
+
+.button-group{
+
+    display:flex;
+
+    gap:16px;
+
+    flex-wrap:wrap;
+}
+
+.btn{
+
+    flex:1;
+
+    padding:16px 24px;
+
+    border:none;
+
+    border-radius:18px;
+
+    font-size:15px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.4s ease;
+
+    text-decoration:none;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.predict-btn{
+
+    background:
+    linear-gradient(135deg,#00d9ff,#0ea5e9);
+
+    color:black;
+}
+
+.home-btn{
+
+    background:
+    linear-gradient(135deg,#8b5cf6,#7c3aed);
+
+    color:white;
+}
+
+.logout-btn{
+
+    background:
+    linear-gradient(135deg,#ef4444,#dc2626);
+
+    color:white;
+}
+
+.btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+    0 10px 25px rgba(255,255,255,0.15);
+}
+
+/* RESULT SECTION */
+
+.result-section{
+
+    margin-top:35px;
+
+    padding:28px;
+
+    border-radius:24px;
+
+    background:rgba(255,255,255,0.03);
+
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.result-title{
+
+    font-size:26px;
+    font-weight:700;
+
+    margin-bottom:22px;
+}
+
+.result-title span{
+    color:#00d9ff;
+}
+
+.preview-img{
+
+    width:100%;
+
+    max-width:420px;
+
+    border-radius:20px;
+
+    border:2px solid rgba(255,255,255,0.08);
+
+    margin-bottom:25px;
+
+    box-shadow:
+    0 15px 30px rgba(0,0,0,0.4);
+}
+
+.result-badge{
+
+    display:inline-block;
+
+    padding:14px 22px;
+
+    border-radius:40px;
+
+    font-size:15px;
+    font-weight:600;
+}
+
+.real{
+
+    background:rgba(34,197,94,0.12);
+
+    border:1px solid rgba(34,197,94,0.2);
+
+    color:#4ade80;
+}
+
+.fake{
+
+    background:rgba(239,68,68,0.12);
+
+    border:1px solid rgba(239,68,68,0.2);
+
+    color:#f87171;
+}
+
+/* RIGHT PANEL */
+
+.side-panel{
+
+    background:rgba(7,14,28,0.75);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:30px;
+
+    padding:35px;
+
+    backdrop-filter:blur(20px);
+
+    position:sticky;
+
+    top:28px;
+
+    overflow:hidden;
+}
+
+.scanner{
+
+    width:170px;
+    height:170px;
+
+    margin:auto;
+
+    position:relative;
+
+    margin-bottom:35px;
+}
+
+.ring{
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:50%;
+
+    border:2px solid rgba(0,217,255,0.25);
+
+    animation:rotate 8s linear infinite;
+}
+
+.ring:nth-child(2){
+
+    inset:15px;
+
+    border-color:rgba(139,92,246,0.3);
+
+    animation-direction:reverse;
+}
+
+.ring:nth-child(3){
+
+    inset:30px;
+
+    border-color:rgba(255,255,255,0.15);
+}
+
+@keyframes rotate{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+.scanner-text{
+
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:24px;
+    font-weight:700;
+
+    color:#00d9ff;
+}
+
+.side-panel h3{
+
+    text-align:center;
+
+    font-size:30px;
+
+    margin-bottom:18px;
+}
+
+.side-panel p{
+
+    text-align:center;
+
+    color:#94a3b8;
+
+    line-height:1.9;
+
+    margin-bottom:35px;
+}
+
+/* STATUS LIST */
+
+.status-list{
+
+    display:flex;
+    flex-direction:column;
+
+    gap:18px;
+}
+
+.status-item{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 20px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,0.03);
+
+    border:1px solid rgba(255,255,255,0.05);
+}
+
+.status-left{
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+}
+
+.status-dot{
+
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+
+    background:#00d9ff;
+
+    box-shadow:
+    0 0 12px #00d9ff;
+
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+        opacity:1;
+    }
+
+    50%{
+        transform:scale(1.4);
+        opacity:0.6;
+    }
+
+    100%{
+        transform:scale(1);
+        opacity:1;
+    }
+
+}
+
+.status-right{
+
+    color:#00d9ff;
+
+    font-weight:600;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .main-layout{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:46px;
+    }
+
+    .side-panel{
+        position:relative;
+        top:0;
+    }
+
+}
+
+@media(max-width:700px){
+
+    body{
+        padding:18px;
+    }
+
+    .hero h1{
+        font-size:38px;
+    }
+
+    .upload-panel,
+    .side-panel{
+        padding:28px;
+    }
+
+    .button-group{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="glow glow1"></div>
+<div class="glow glow2"></div>
+
+<!-- HERO -->
+
+<div class="hero">
+
+    <div class="hero-tag">
+        AI IMAGE FORENSICS SYSTEM
+    </div>
+
+    <h1>
+        Detect <span>Fake Images</span> with AI
+    </h1>
+
+    <p>
+        Advanced AI-powered image verification engine that analyzes
+        image authenticity, detects manipulations, and identifies
+        digitally tampered visual content using deep learning.
+    </p>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main-layout">
+
+    <!-- LEFT -->
+
+    <div class="upload-panel">
+
+        <div class="panel-title">
+            AI <span>Forensics Lab</span>
+        </div>
+
+        <div class="panel-subtitle">
+            Upload any image to begin advanced neural AI
+            authenticity verification and digital manipulation analysis.
+        </div>
+
+        <form method="post"
+              enctype="multipart/form-data">
+
+            <div class="upload-box">
+
+                <div class="upload-icon">
+                    🖼
+                </div>
+
+                <div class="upload-text">
+                    Upload Image For Analysis
+                </div>
+
+                <div class="upload-sub">
+                    Supported formats: JPG, PNG, JPEG
+                </div>
+
+                <input type="file"
+                       name="image"
+                       required>
+
+            </div>
+
+            <br>
+
+            <div class="button-group">
+
+                <button type="submit"
+                        class="btn predict-btn">
+
+                    🔍 Analyze Image
+
+                </button>
+
+                <a href="/home"
+                   class="btn home-btn">
+
+                    🏠 Dashboard
+
+                </a>
+
+                <a href="/logout"
+                   class="btn logout-btn">
+
+                    🚪 Logout
+
+                </a>
+
+            </div>
+
+        </form>
+
+        {% if image %}
+
+        <div class="result-section">
+
+            <div class="result-title">
+                AI <span>Image Analysis</span>
+            </div>
+
+            <img src="{{ image }}"
+                 class="preview-img">
+
+            <br>
+
+            {% if "Fake" in result %}
+
+            <div class="result-badge fake">
+                ⚠ Suspicious / Manipulated Image Detected
+            </div>
+
+            {% else %}
+
+            <div class="result-badge real">
+                ✅ Authentic Image Verified
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div class="side-panel">
+
+        <div class="scanner">
+
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+
+            <div class="scanner-text">
+                AI
+            </div>
+
+        </div>
+
+        <h3>
+            Live Forensics Engine
+        </h3>
+
+        <p>
+            Real-time neural scanning system for advanced
+            image tampering detection and digital authenticity analysis.
+        </p>
+
+        <div class="status-list">
+
+            <div class="status-item">
+
+                <div class="status-left">
+
+                    <div class="status-dot"></div>
+
+                    Neural AI Scanner
+
+                </div>
+
+                <div class="status-right">
+                    Active
+                </div>
+
+            </div>
+
+            <div class="status-item">
+
+                <div class="status-left">
+
+                    <div class="status-dot"></div>
+
+                    Metadata Verification
+
+                </div>
+
+                <div class="status-right">
+                    Running
+                </div>
+
+            </div>
+
+            <div class="status-item">
+
+                <div class="status-left">
+
+                    <div class="status-dot"></div>
+
+                    Pixel Integrity Scan
+
+                </div>
+
+                <div class="status-right">
+                    Processing
+                </div>
+
+            </div>
+
+            <div class="status-item">
+
+                <div class="status-left">
+
+                    <div class="status-dot"></div>
+
+                    Deep Learning Analysis
+
+                </div>
+
+                <div class="status-right">
+                    Online
+                </div>
+
+            </div>
+
+            {% if result %}
+
+            <div class="status-item">
+
+                <div class="status-left">
+
+                    <div class="status-dot"></div>
+
+                    Final AI Decision
+
+                </div>
+
+                <div class="status-right">
+
+                    {{ result }}
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>AI Intelligence Command Center</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    position:relative;
+
+    background:
+    radial-gradient(circle at top left,#00d9ff18,transparent 28%),
+    radial-gradient(circle at bottom right,#8b5cf618,transparent 28%),
+    linear-gradient(135deg,#020617,#0b1120,#111827);
+
+    color:white;
+
+    padding:28px;
+}
+
+body::before{
+
+    content:'';
+
+    position:absolute;
+    inset:0;
+
+    background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+
+    background-size:50px 50px;
+
+    animation:gridMove 20s linear infinite;
+
+    pointer-events:none;
+}
+
+@keyframes gridMove{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    100%{
+        transform:translateY(50px);
+    }
+
+}
+
+.glow{
+
+    position:absolute;
+
+    width:320px;
+    height:320px;
+
+    border-radius:50%;
+
+    filter:blur(130px);
+
+    opacity:0.3;
+
+    pointer-events:none;
+}
+
+.glow1{
+    background:#00d9ff;
+    top:-120px;
+    left:-120px;
+}
+
+.glow2{
+    background:#8b5cf6;
+    bottom:-120px;
+    right:-120px;
+}
+
+/* NAVBAR */
+
+.navbar{
+
+    position:relative;
+    z-index:10;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:rgba(7,14,28,0.75);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:24px;
+
+    padding:20px 28px;
+
+    backdrop-filter:blur(20px);
+
+    margin-bottom:50px;
+}
+
+.logo{
+
+    font-size:28px;
+    font-weight:700;
+}
+
+.logo span{
+    color:#00d9ff;
+}
+
+.logout-btn{
+
+    padding:14px 24px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:
+    linear-gradient(135deg,#ef4444,#dc2626);
+
+    color:white;
+
+    font-size:15px;
+    font-weight:600;
+
+    text-decoration:none;
+
+    transition:0.4s ease;
+}
+
+.logout-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 25px rgba(239,68,68,0.35);
+}
+
+/* HERO */
+
+.hero{
+
+    text-align:center;
+
+    position:relative;
+    z-index:10;
+
+    margin-bottom:60px;
+}
+
+.hero-tag{
+
+    display:inline-block;
+
+    padding:10px 24px;
+
+    border-radius:40px;
+
+    background:rgba(0,217,255,0.08);
+
+    border:1px solid rgba(0,217,255,0.15);
+
+    color:#00d9ff;
+
+    font-size:14px;
+    font-weight:600;
+
+    margin-bottom:25px;
+}
+
+.hero h1{
+
+    font-size:72px;
+
+    line-height:1.05;
+
+    margin-bottom:25px;
+}
+
+.hero h1 span{
+    color:#00d9ff;
+}
+
+.hero p{
+
+    max-width:900px;
+
+    margin:auto;
+
+    color:#94a3b8;
+
+    line-height:1.9;
+
+    font-size:18px;
+}
+
+/* MAIN GRID */
+
+.main-grid{
+
+    display:grid;
+
+    grid-template-columns:1.1fr 0.9fr;
+
+    gap:28px;
+
+    position:relative;
+    z-index:10;
+}
+
+/* LEFT PANEL */
+
+.left-panel{
+
+    display:flex;
+    flex-direction:column;
+
+    gap:28px;
+}
+
+/* FEATURE CARDS */
+
+.feature-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:22px;
+}
+
+.feature-card{
+
+    background:rgba(7,14,28,0.75);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:28px;
+
+    padding:32px;
+
+    backdrop-filter:blur(20px);
+
+    position:relative;
+
+    overflow:hidden;
+
+    transition:0.4s ease;
+}
+
+.feature-card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:rgba(0,217,255,0.25);
+
+    box-shadow:
+    0 20px 35px rgba(0,217,255,0.08);
+}
+
+.feature-card::before{
+
+    content:'';
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    background:#00d9ff10;
+
+    top:-80px;
+    right:-80px;
+}
+
+.feature-icon{
+
+    font-size:48px;
+
+    margin-bottom:22px;
+}
+
+.feature-title{
+
+    font-size:26px;
+    font-weight:700;
+
+    margin-bottom:14px;
+}
+
+.feature-title span{
+    color:#00d9ff;
+}
+
+.feature-text{
+
+    color:#94a3b8;
+
+    line-height:1.8;
+
+    margin-bottom:28px;
+}
+
+.feature-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:14px 24px;
+
+    border-radius:16px;
+
+    text-decoration:none;
+
+    font-size:15px;
+    font-weight:600;
+
+    transition:0.4s ease;
+}
+
+.news-btn{
+
+    background:
+    linear-gradient(135deg,#00d9ff,#0ea5e9);
+
+    color:black;
+}
+
+.image-btn{
+
+    background:
+    linear-gradient(135deg,#8b5cf6,#7c3aed);
+
+    color:white;
+}
+
+.feature-btn:hover{
+
+    transform:translateY(-3px);
+}
+
+/* STATUS PANEL */
+
+.status-panel{
+
+    background:rgba(7,14,28,0.75);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:30px;
+
+    padding:35px;
+
+    backdrop-filter:blur(20px);
+
+    position:sticky;
+
+    top:28px;
+
+    overflow:hidden;
+}
+
+.scanner{
+
+    width:180px;
+    height:180px;
+
+    margin:auto;
+
+    position:relative;
+
+    margin-bottom:35px;
+}
+
+.ring{
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:50%;
+
+    border:2px solid rgba(0,217,255,0.25);
+
+    animation:rotate 8s linear infinite;
+}
+
+.ring:nth-child(2){
+
+    inset:15px;
+
+    border-color:rgba(139,92,246,0.3);
+
+    animation-direction:reverse;
+}
+
+.ring:nth-child(3){
+
+    inset:30px;
+
+    border-color:rgba(255,255,255,0.15);
+}
+
+@keyframes rotate{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+.scanner-text{
+
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:26px;
+    font-weight:700;
+
+    color:#00d9ff;
+}
+
+.status-panel h3{
+
+    text-align:center;
+
+    font-size:34px;
+
+    margin-bottom:18px;
+}
+
+.status-panel p{
+
+    text-align:center;
+
+    color:#94a3b8;
+
+    line-height:1.9;
+
+    margin-bottom:35px;
+}
+
+/* STATUS LIST */
+
+.status-list{
+
+    display:flex;
+    flex-direction:column;
+
+    gap:18px;
+}
+
+.status-item{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 20px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,0.03);
+
+    border:1px solid rgba(255,255,255,0.05);
+}
+
+.status-left{
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+}
+
+.status-dot{
+
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+
+    background:#00d9ff;
+
+    box-shadow:
+    0 0 12px #00d9ff;
+
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+        opacity:1;
+    }
+
+    50%{
+        transform:scale(1.4);
+        opacity:0.6;
+    }
+
+    100%{
+        transform:scale(1);
+        opacity:1;
+    }
+
+}
+
+.status-right{
+
+    color:#00d9ff;
+
+    font-weight:600;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .main-grid{
+        grid-template-columns:1fr;
+    }
+
+    .status-panel{
+        position:relative;
+        top:0;
+    }
+
+}
+
+@media(max-width:750px){
+
+    body{
+        padding:18px;
+    }
+
+    .hero h1{
+        font-size:46px;
+    }
+
+    .feature-grid{
+        grid-template-columns:1fr;
+    }
+
+    .navbar{
+        flex-direction:column;
+        gap:18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="glow glow1"></div>
+<div class="glow glow2"></div>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+    <div class="logo">
+        AI <span>Intelligence Hub</span>
+    </div>
+
+    <a href="/logout"
+       class="logout-btn">
+
+       Logout
+
+    </a>
+
+</div>
+
+<!-- HERO -->
+
+<div class="hero">
+
+    <div class="hero-tag">
+        ADVANCED AI DETECTION PLATFORM
+    </div>
+
+    <h1>
+        AI Command <span>Center</span>
+    </h1>
+
+    <p>
+        Unified artificial intelligence platform for fake news detection,
+        image forensics, intelligent summaries, and real-time misinformation
+        verification powered by advanced neural machine learning systems.
+    </p>
+
+</div>
+
+<!-- MAIN GRID -->
+
+<div class="main-grid">
+
+    <!-- LEFT -->
+
+    <div class="left-panel">
+
+        <div class="feature-grid">
+
+            <!-- NEWS CARD -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📰
+                </div>
+
+                <div class="feature-title">
+                    AI News <span>Detection</span>
+                </div>
+
+                <div class="feature-text">
+                    Analyze news topics using intelligent AI models
+                    that detect misinformation and generate advanced summaries.
+                </div>
+
+                <a href="/dashboard"
+                   class="feature-btn news-btn">
+
+                   Start News Analysis
+
+                </a>
+
+            </div>
+
+            <!-- IMAGE CARD -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🖼
+                </div>
+
+                <div class="feature-title">
+                    Image <span>Forensics</span>
+                </div>
+
+                <div class="feature-text">
+                    Upload and scan manipulated images using
+                    deep learning authenticity verification systems.
+                </div>
+
+                <a href="/fake_image"
+                   class="feature-btn image-btn">
+
+                   Analyze Images
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div class="status-panel">
+
+        <div class="scanner">
+
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+
+            <div class="scanner-text">
+                AI
+            </div>
+
+        </div>
+
+        <h3>
+            Live AI Monitoring
+        </h3>
+
+        <p>
+            Real-time neural intelligence monitoring and verification
+            systems actively analyzing misinformation patterns.
+        </p>
+
+        <div class="status-list">
+
+            <div class="status-item">
+
+                <div class="status-left">
+
+                    <div class="status-dot"></div>
+
+                    Neural AI Engine
+
+                </div>
+
+                <div class="status-right">
+                    Active
+                </div>
+
+            </div>
+
+            <div class="status-item">
+
+                <div class="status-left">
+
+                    <div class="status-dot"></div>
+
+                    News Verification
+
+                </div>
+
+                <div class="status-right">
+                    Online
+                </div>
+
+            </div>
+
+            <div class="status-item">
+
+                <div class="status-left">
+
+                    <div class="status-dot"></div>
+
+                    Image Forensics
+
+                </div>
+
+                <div class="status-right">
+                    Running
+                </div>
+
+            </div>
+
+            <div class="status-item">
+
+                <div class="status-left">
+
+                    <div class="status-dot"></div>
+
+                    AI Protection Layer
+
+                </div>
+
+                <div class="status-right">
+                    Secure
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
